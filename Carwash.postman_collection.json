@@ -1,0 +1,229 @@
+{
+  "info": {
+    "_postman_id": "2e8b9af4-3f78-4d30-9c59-c1b202fd3fe0",
+    "name": "Carwash Event-Driven API",
+    "description": "Coleção Postman para exercitar os endpoints do sistema de lava-rápido orientado a eventos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Service Orders",
+      "description": "Fluxo completo de ordens de serviço e histórico de eventos.",
+      "item": [
+        {
+          "name": "List All Service Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders"
+              ]
+            },
+            "description": "Retorna todas as ordens registradas."
+          },
+          "response": []
+        },
+        {
+          "name": "List Pending Service Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders/pending",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders",
+                "pending"
+              ]
+            },
+            "description": "Lista ordens com status REQUESTED."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders/{{orderId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders",
+                "{{orderId}}"
+              ]
+            },
+            "description": "Busca detalhes de uma ordem específica."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Service Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 1,\n  \"vehicleId\": 1,\n  \"serviceId\": 1,\n  \"scheduledFor\": \"2025-05-12T10:00:00\",\n  \"notes\": \"Lavagem básica para o carro da Anna\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders"
+              ]
+            },
+            "description": "Cria uma nova ordem de serviço."
+          },
+          "response": []
+        },
+        {
+          "name": "Start Service Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders/{{orderId}}/start",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders",
+                "{{orderId}}",
+                "start"
+              ]
+            },
+            "description": "Inicia a ordem (gera evento de início)."
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Service Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders/{{orderId}}/complete",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders",
+                "{{orderId}}",
+                "complete"
+              ]
+            },
+            "description": "Finaliza a ordem (gera evento de conclusão)."
+          },
+          "response": []
+        },
+        {
+          "name": "List Events for Service Order",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders/{{orderId}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders",
+                "{{orderId}}",
+                "events"
+              ]
+            },
+            "description": "Consulta o histórico de eventos persistidos para a ordem."
+          },
+          "response": []
+        },
+        {
+          "name": "List Orders by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-orders/status/{{status}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-orders",
+                "status",
+                "{{status}}"
+              ]
+            },
+            "description": "Filtra ordens por status (REQUESTED, IN_PROGRESS, COMPLETED, CANCELLED)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Metrics",
+      "description": "Consultas relacionadas a monitoramento.",
+      "item": [
+        {
+          "name": "Service Metrics Snapshot",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/metrics/services",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "metrics",
+                "services"
+              ]
+            },
+            "description": "Retorna o snapshot atual de métricas derivadas dos eventos."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "orderId",
+      "value": "1"
+    },
+    {
+      "key": "status",
+      "value": "REQUESTED"
+    }
+  ]
+}
+
